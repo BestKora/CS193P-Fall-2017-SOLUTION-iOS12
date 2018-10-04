@@ -32,7 +32,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jrC-d5-aYA">
-                                            <rect key="frame" x="8" y="28" width="284" height="264"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                         </imageView>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="LbV-UM-ToK">
                                             <rect key="frame" x="131.5" y="131.5" width="37" height="37"/>
@@ -41,11 +41,11 @@
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="jrC-d5-aYA" firstAttribute="leading" secondItem="XRb-BS-kVj" secondAttribute="leadingMargin" id="DsU-OI-i0Q"/>
-                                    <constraint firstItem="jrC-d5-aYA" firstAttribute="top" secondItem="XRb-BS-kVj" secondAttribute="topMargin" id="iCg-t8-gfF"/>
+                                    <constraint firstAttribute="trailing" secondItem="jrC-d5-aYA" secondAttribute="trailing" id="EIF-jG-35Z"/>
+                                    <constraint firstItem="jrC-d5-aYA" firstAttribute="top" secondItem="XRb-BS-kVj" secondAttribute="top" id="I71-T2-Sr6"/>
+                                    <constraint firstAttribute="bottom" secondItem="jrC-d5-aYA" secondAttribute="bottom" id="Pys-g7-ocW"/>
                                     <constraint firstItem="LbV-UM-ToK" firstAttribute="centerX" secondItem="XRb-BS-kVj" secondAttribute="centerX" id="jdq-92-Buw"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="jrC-d5-aYA" secondAttribute="bottom" id="je3-DF-Z90"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="jrC-d5-aYA" secondAttribute="trailing" id="jux-m8-6Xc"/>
+                                    <constraint firstItem="jrC-d5-aYA" firstAttribute="leading" secondItem="XRb-BS-kVj" secondAttribute="leading" id="vCi-5n-1QT"/>
                                     <constraint firstItem="LbV-UM-ToK" firstAttribute="centerY" secondItem="XRb-BS-kVj" secondAttribute="centerY" id="ykk-7u-b4o"/>
                                 </constraints>
                                 <connections>
