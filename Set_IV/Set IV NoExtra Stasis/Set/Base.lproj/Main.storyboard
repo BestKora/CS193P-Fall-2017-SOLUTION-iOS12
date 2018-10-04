@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Set Game View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="SetGameViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6kc-sG-tUL" customClass="BoardView" customModule="Set" customModuleProvider="target">
+                                <rect key="frame" x="8" y="52" width="359" height="594"/>
+                                <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ugu-Em-OGa">
+                                <rect key="frame" x="8" y="693" width="359" height="85"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1vB-aH-Vlq" customClass="BorderButton" customModule="Set" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="23" width="73" height="39"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <state key="normal" title="  sets 0">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="4"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="hint" destination="BYZ-38-t0r" eventType="touchUpInside" id="j7M-C8-26k"/>
+                                        </connections>
+                                    </button>
+                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Deal Deck" translatesAutoresizingMaskIntoConstraints="NO" id="vtz-l4-WRK" customClass="DeckImageView" customModule="Set" customModuleProvider="target">
+                                        <rect key="frame" x="81" y="0.0" width="152" height="85"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="deckNumberString" value="81"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                    <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L13-lp-hjd">
+                                        <rect key="frame" x="241" y="6.6666666666666288" width="118" height="72"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <state key="normal" title="Sets 0" backgroundImage="tmp copy1">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                        </variation>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5Zk-eo-2GK">
+                                <rect key="frame" x="8" y="654" width="359" height="39"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MsM-hp-tKD" customClass="BorderButton" customModule="Set" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="359" height="39"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title=" New Game ">
+                                            <color key="titleColor" red="0.55634254220000001" green="0.97934550050000002" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        </variation>
+                                        <connections>
+                                            <action selector="new" destination="BYZ-38-t0r" eventType="touchUpInside" id="M2V-si-uir"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <variation key="heightClass=compact" axis="vertical"/>
+                                <variation key="heightClass=regular-widthClass=regular" spacing="60"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Ugu-Em-OGa" firstAttribute="top" secondItem="5Zk-eo-2GK" secondAttribute="bottom" id="2ad-G1-p8c"/>
+                            <constraint firstItem="Ugu-Em-OGa" firstAttribute="top" secondItem="6kc-sG-tUL" secondAttribute="bottom" constant="40.666666666666686" id="6bc-PU-kg2">
+                                <variation key="heightClass=compact" constant="8" symbolic="YES"/>
+                            </constraint>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="top" secondItem="6kc-sG-tUL" secondAttribute="bottom" constant="8" id="6pu-fL-2V1"/>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="leading" secondItem="6kc-sG-tUL" secondAttribute="trailing" constant="56" id="JoQ-Pv-FWU">
+                                <variation key="heightClass=compact" constant="8" symbolic="YES"/>
+                            </constraint>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="TRa-9K-7y7"/>
+                            <constraint firstItem="6kc-sG-tUL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="aMd-L8-fod"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5Zk-eo-2GK" secondAttribute="trailing" constant="8" id="hSZ-wc-86d"/>
+                            <constraint firstItem="Ugu-Em-OGa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="hcd-r5-7qh"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6kc-sG-tUL" secondAttribute="trailing" constant="8" id="jHm-Ij-gzI"/>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="kEl-Bc-l5a"/>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="lkB-C7-681"/>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="leading" secondItem="Ugu-Em-OGa" secondAttribute="trailing" constant="-115" id="n0S-oA-78U"/>
+                            <constraint firstItem="Ugu-Em-OGa" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="p8H-Av-2MD"/>
+                            <constraint firstItem="6kc-sG-tUL" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="q1k-fa-1Bu"/>
+                            <constraint firstItem="5Zk-eo-2GK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="108.66666666666669" id="qfm-hh-lvK"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Ugu-Em-OGa" secondAttribute="trailing" constant="8" id="rpP-g5-Hct"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="JoQ-Pv-FWU"/>
+                                <exclude reference="kEl-Bc-l5a"/>
+                                <exclude reference="lkB-C7-681"/>
+                                <exclude reference="n0S-oA-78U"/>
+                                <exclude reference="qfm-hh-lvK"/>
+                                <exclude reference="6bc-PU-kg2"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="jHm-Ij-gzI"/>
+                                <exclude reference="6pu-fL-2V1"/>
+                                <include reference="JoQ-Pv-FWU"/>
+                                <exclude reference="TRa-9K-7y7"/>
+                                <exclude reference="kEl-Bc-l5a"/>
+                                <include reference="lkB-C7-681"/>
+                                <exclude reference="n0S-oA-78U"/>
+                                <exclude reference="qfm-hh-lvK"/>
+                                <exclude reference="2ad-G1-p8c"/>
+                                <include reference="6bc-PU-kg2"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="boardView" destination="6kc-sG-tUL" id="suX-0u-IHa"/>
+                        <outlet property="deckImageView" destination="vtz-l4-WRK" id="Azi-Hs-u5z"/>
+                        <outlet property="hintButton" destination="1vB-aH-Vlq" id="Ose-0f-Vwi"/>
+                        <outlet property="newButton" destination="MsM-hp-tKD" id="ccO-VX-eha"/>
+                        <outlet property="setsButton" destination="L13-lp-hjd" id="Gdk-oi-W1y"/>
+                        <outlet property="stackMessage" destination="Ugu-Em-OGa" id="9jY-9T-hYB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="226" y="123"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Deal Deck" width="152" height="85"/>
+        <image name="tmp copy1" width="120" height="72"/>
+    </resources>
+</document>
