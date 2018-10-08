@@ -11,11 +11,7 @@ import UIKit
 class ImageGalleryCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UICollectionViewDropDelegate, UICollectionViewDragDelegate {
     
      // MARK: - Public API, Model
-    var imageGallery = ImageGallery (){
-        didSet {
-                collectionView?.reloadData()
-        }
-    }
+    var imageGallery = ImageGallery ()
     
     @IBAction func save(_ sender: UIBarButtonItem) {
         if let json = imageGallery.json {
@@ -47,10 +43,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         )
     }
     
-    var garbageView =  GarbageView()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        let garbageView =  GarbageView()
         if let trashBounds = navigationController?.navigationBar.bounds {
             garbageView.frame = CGRect(x: trashBounds.size.width*0.6,
                                        y: 0.0, width: trashBounds.size.width*0.4,
@@ -76,6 +71,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         flowLayout?.invalidateLayout()
     }
     
@@ -191,7 +187,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                                                     as? ImageCollectionViewCell,
             let image = itemCell.imageGallery.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = imageGallery.images[indexPath.item]
+            dragItem.localObject = indexPath.item// imageGallery.images[indexPath.item]
             return [dragItem]
         } else {
             return []
@@ -229,7 +225,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-                if  let imageInfo = item.dragItem.localObject as? ImageModel {
+                let imageInfo = imageGallery.images[sourceIndexPath.item]
                     collectionView.performBatchUpdates({
                       imageGallery.images.remove(at: sourceIndexPath.item)
                       imageGallery.images.insert(imageInfo,
@@ -239,7 +235,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                       collectionView.insertItems(at: [destinationIndexPath])
                     })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                }
             } else {  // Drag from other app
                 let placeholderContext = coordinator.drop(
                     item.dragItem,

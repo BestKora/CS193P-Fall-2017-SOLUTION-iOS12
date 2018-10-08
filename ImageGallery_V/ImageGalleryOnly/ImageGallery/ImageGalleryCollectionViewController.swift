@@ -27,6 +27,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         flowLayout?.invalidateLayout()
     }
     
@@ -40,8 +41,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         return imageCollection.count
     }
     
-    override func collectionView(
-        _ collectionView: UICollectionView,
+    override func collectionView(_ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
         ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
@@ -181,7 +181,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-                if  let imageInfo = item.dragItem.localObject as? ImageModel {
+              let imageInfo = imageCollection[sourceIndexPath.item]
                     collectionView.performBatchUpdates({
                         imageCollection.remove(at: sourceIndexPath.item)
                         imageCollection.insert(imageInfo, at: destinationIndexPath.item)
@@ -190,7 +190,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                         collectionView.insertItems(at: [destinationIndexPath])
                     })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                }
+                
             } else {  // Drag from other app
                 let placeholderContext = coordinator.drop(
                     item.dragItem,
@@ -209,7 +209,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                     DispatchQueue.main.async {
                         if let image = provider as? UIImage {
                             aspectRatioLocal = Double(image.size.width) /
-                                Double(image.size.height)
+                                               Double(image.size.height)
                         }
                     }
                 }

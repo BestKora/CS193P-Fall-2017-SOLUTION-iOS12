@@ -132,7 +132,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="RNf-cE-dIb" kind="relationship" relationship="rootViewController" id="imm-GA-Wr6"/>
+                        <segue destination="RNf-cE-dIb" kind="relationship" relationship="rootViewController" id="9Nv-HH-vrO"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7hJ-c3-NJi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -202,12 +202,12 @@
                                     </subviews>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="Me9-kS-USY" secondAttribute="trailing" id="Ll4-ft-4oY"/>
-                                    <constraint firstItem="Me9-kS-USY" firstAttribute="top" secondItem="nbd-ok-WPQ" secondAttribute="top" id="R5P-Dd-HeM"/>
-                                    <constraint firstItem="KRO-hM-U7Q" firstAttribute="centerY" secondItem="nbd-ok-WPQ" secondAttribute="centerY" id="TeP-4G-lkF"/>
-                                    <constraint firstAttribute="bottom" secondItem="Me9-kS-USY" secondAttribute="bottom" id="Ten-9e-v0K"/>
-                                    <constraint firstItem="KRO-hM-U7Q" firstAttribute="centerX" secondItem="nbd-ok-WPQ" secondAttribute="centerX" id="fcI-jy-SWQ"/>
-                                    <constraint firstItem="Me9-kS-USY" firstAttribute="leading" secondItem="nbd-ok-WPQ" secondAttribute="leading" id="kA3-d8-EhZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Me9-kS-USY" secondAttribute="trailing" id="2ht-lR-Wgt"/>
+                                    <constraint firstItem="Me9-kS-USY" firstAttribute="top" secondItem="nbd-ok-WPQ" secondAttribute="top" id="6QN-lF-ZyU"/>
+                                    <constraint firstItem="KRO-hM-U7Q" firstAttribute="centerY" secondItem="nbd-ok-WPQ" secondAttribute="centerY" id="LHu-bn-FpR"/>
+                                    <constraint firstItem="KRO-hM-U7Q" firstAttribute="centerX" secondItem="nbd-ok-WPQ" secondAttribute="centerX" id="bDs-MA-wmF"/>
+                                    <constraint firstItem="Me9-kS-USY" firstAttribute="leading" secondItem="nbd-ok-WPQ" secondAttribute="leading" id="dFc-22-f1Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="Me9-kS-USY" secondAttribute="bottom" id="doV-s0-mw1"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="imageGallery" destination="Me9-kS-USY" id="yIK-QP-DX3"/>
@@ -230,8 +230,8 @@
                                 </view>
                                 <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="0.57962328770000004" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="TvZ-Yf-RUG" firstAttribute="centerY" secondItem="ckX-AX-Pyu" secondAttribute="centerY" id="7p3-lS-3wN"/>
-                                    <constraint firstItem="TvZ-Yf-RUG" firstAttribute="centerX" secondItem="ckX-AX-Pyu" secondAttribute="centerX" id="oEx-0p-SLI"/>
+                                    <constraint firstItem="TvZ-Yf-RUG" firstAttribute="centerY" secondItem="ckX-AX-Pyu" secondAttribute="centerY" id="WgB-cw-F8Z"/>
+                                    <constraint firstItem="TvZ-Yf-RUG" firstAttribute="centerX" secondItem="ckX-AX-Pyu" secondAttribute="centerX" id="XC9-WF-dsX"/>
                                 </constraints>
                             </collectionViewCell>
                         </cells>

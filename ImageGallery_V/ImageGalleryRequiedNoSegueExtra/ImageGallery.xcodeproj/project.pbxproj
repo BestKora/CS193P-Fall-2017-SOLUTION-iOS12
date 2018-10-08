@@ -10,7 +10,6 @@
 		E42FE6E42111D34200363580 /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42FE6E32111D34200363580 /* GalleryTableViewCell.swift */; };
 		E42FE6E62115CA9A00363580 /* GalleriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42FE6E52115CA9A00363580 /* GalleriesTableViewController.swift */; };
 		E44EB3F720E107DB0088D566 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44EB3F620E107DB0088D566 /* ImageViewController.swift */; };
-		E45E753F214BCB55008975FD /* GarbageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45E753E214BCB54008975FD /* GarbageView.swift */; };
 		E4983BEE20D8CF5700CB501F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4983BED20D8CF5700CB501F /* AppDelegate.swift */; };
 		E4983BF320D8CF5700CB501F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4983BF120D8CF5700CB501F /* Main.storyboard */; };
 		E4983BF520D8CF5A00CB501F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4983BF420D8CF5A00CB501F /* Assets.xcassets */; };
@@ -19,13 +18,13 @@
 		E4983C0320DAA73500CB501F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4983C0220DAA73500CB501F /* ImageCollectionViewCell.swift */; };
 		E4983C0520DBD0A100CB501F /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4983C0420DBD0A000CB501F /* ImageGallery.swift */; };
 		E4AEA33A20F8DA49004E68E0 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AEA33920F8DA49004E68E0 /* Utilities.swift */; };
+		E4EC6A37216B2957000AB03B /* GarbageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC6A36216B2957000AB03B /* GarbageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E42FE6E32111D34200363580 /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
 		E42FE6E52115CA9A00363580 /* GalleriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesTableViewController.swift; sourceTree = "<group>"; };
 		E44EB3F620E107DB0088D566 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
-		E45E753E214BCB54008975FD /* GarbageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarbageView.swift; sourceTree = "<group>"; };
 		E469F883214BD07700D47FDC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4983BEA20D8CF5700CB501F /* ImageGallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageGallery.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4983BED20D8CF5700CB501F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +35,7 @@
 		E4983C0220DAA73500CB501F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E4983C0420DBD0A000CB501F /* ImageGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
 		E4AEA33920F8DA49004E68E0 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		E4EC6A36216B2957000AB03B /* GarbageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GarbageView.swift; path = ../../../PersistentImageGallery_VI/ImageGallery_6_Requed_Browser_No_Save_Button/ImageGallery/ImageGallery/GarbageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +75,7 @@
 				E4983C0420DBD0A000CB501F /* ImageGallery.swift */,
 				E42FE6E32111D34200363580 /* GalleryTableViewCell.swift */,
 				E4983C0220DAA73500CB501F /* ImageCollectionViewCell.swift */,
-				E45E753E214BCB54008975FD /* GarbageView.swift */,
+				E4EC6A36216B2957000AB03B /* GarbageView.swift */,
 				E469F883214BD07700D47FDC /* Info.plist */,
 				E4983BFF20D8D34200CB501F /*  Supporting Files */,
 			);
@@ -170,7 +170,7 @@
 				E4983C0520DBD0A100CB501F /* ImageGallery.swift in Sources */,
 				E4983C0320DAA73500CB501F /* ImageCollectionViewCell.swift in Sources */,
 				E42FE6E62115CA9A00363580 /* GalleriesTableViewController.swift in Sources */,
-				E45E753F214BCB55008975FD /* GarbageView.swift in Sources */,
+				E4EC6A37216B2957000AB03B /* GarbageView.swift in Sources */,
 				E44EB3F720E107DB0088D566 /* ImageViewController.swift in Sources */,
 				E4983BEE20D8CF5700CB501F /* AppDelegate.swift in Sources */,
 				E4983C0120D8EA8E00CB501F /* ImageGalleryCollectionViewController.swift in Sources */,

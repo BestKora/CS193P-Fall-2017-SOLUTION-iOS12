@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ImageGallery.xcodeproj">
+      location = "group:/Users/tatianakornilova/Documents/CS193_2017_iOS11/Solution_Fall_2017_iOS12/PersistentImageGallery_VI/ImageGallery_6_Requed_Browser/ImageGallery/ImageGallery/GarbageView.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

@@ -85,11 +85,43 @@ extension URL {
             return self.baseURL ?? self
         }
     }
+    
+     // ------New, not in DEMO ---
+    mutating func changeLocalURL() {
+        guard self.absoluteString.hasPrefix("file") else {return}
+        let urlString = self.absoluteString
+        var name = ""
+        let pathComponents = urlString.components(separatedBy: "/")
+        if pathComponents.count > 1 {
+            if pathComponents[pathComponents.count-2] ==
+                                      UIImage.localImagesDirectory {
+                name = pathComponents.last!
+            } else {
+                return
+            }
+        }
+        if var url = FileManager.default.urls(for: .applicationSupportDirectory,
+                                               in: .userDomainMask).first {
+            url = url.appendingPathComponent(UIImage.localImagesDirectory)
+            do {
+                try FileManager.default.createDirectory(at: url,
+                               withIntermediateDirectories: true)
+                url = url.appendingPathComponent(name)
+                if url.pathExtension != "jpg" {
+                    url = url.appendingPathExtension("jpg")
+                }
+                print ("-----------Change file \n \(self) \n на \n \(url)")
+                self = url
+            } catch let error {
+                print("UIImage.urlToStoreLocallyAsJPEG \(error)")
+            }
+        }
+    }
 }
 
 extension UIImage
 {
-    private static let localImagesDirectory = "UIImage.storeLocallyAsJPEG"
+    static let localImagesDirectory = "UIImage.storeLocallyAsJPEG"
     
     static func urlToStoreLocallyAsJPEG(named: String) -> URL? {
         var name = named
@@ -130,6 +162,27 @@ extension UIImage
         }
         return nil
     }
+    
+  //------- New, not in DEMO -----
+    func check(_ url: URL, handler: @escaping (URL?) -> Void) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            let urlContents = try? Data(contentsOf: url.imageURL)
+            DispatchQueue.main.async {
+                if let data = urlContents,UIImage(data: data) != nil {
+                    handler(url)
+                } else {
+                    if let urlLocal = self.storeLocallyAsJPEG(named:
+                          String(Date().timeIntervalSinceReferenceDate)) {
+                        print ("Local плохо = \(urlLocal) \(self)")
+                        handler(urlLocal)
+                    } else {
+                        handler(nil)
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension String {
@@ -213,3 +266,4 @@ extension UIView {
         return image
     }
 }
+

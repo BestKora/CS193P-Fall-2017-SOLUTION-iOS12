@@ -11,11 +11,7 @@ import UIKit
 class ImageGalleryCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UICollectionViewDropDelegate, UICollectionViewDragDelegate{
     
      // MARK: - Public API, Model
-    var imageGallery = ImageGallery (){
-        didSet {
-                collectionView?.reloadData()
-        }
-    }
+    var imageGallery = ImageGallery ()
     
     var document: ImageGalleryDocument?
     
@@ -29,7 +25,6 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
      func documentChanged() {
         document?.imageGallery = imageGallery
         if  document?.imageGallery != nil {
-            _ = firstImage
             document?.updateChangeCount(.done)
         }
     }
@@ -47,15 +42,31 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         document?.open { success in
             if success {
                 self.title = self.document?.localizedName
                 self.imageGallery = self.document?.imageGallery ?? ImageGallery ()
+                //--------
+                self.imageGallery.images.mutateEach({ image in
+                    image.url.changeLocalURL()
+                })
+                //--------
+                self.collectionView?.reloadData()
             }
         }
     }
     
     // MARK: - Live cycle methods
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if document?.imageGallery != nil {
+            if let firstImage = firstImage?.snapshot {
+                document?.thumbnail = firstImage
+            }
+        }
+        self.document?.close()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,11 +80,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         )
     }
     
-    var garbageView =  GarbageView()
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        let garbageView =  GarbageView()
         if let trashBounds = navigationController?.navigationBar.bounds {
             garbageView.garbageViewDidChanged = { [weak self] in
                  self?.documentChanged()
@@ -88,6 +97,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         flowLayout?.invalidateLayout()
     }
     
@@ -203,7 +213,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                                                     as? ImageCollectionViewCell,
             let image = itemCell.imageGallery.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = imageGallery.images[indexPath.item]
+            dragItem.localObject = indexPath.item
             return [dragItem]
         } else {
             return []
@@ -213,91 +223,102 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     // MARK: UICollectionViewDropDelegate
     
     func collectionView(_ collectionView: UICollectionView,
-                       canHandle session: UIDropSession) -> Bool {
+                        canHandle session: UIDropSession) -> Bool {
         let isSelf = (session.localDragSession?.localContext as?
-                                     UICollectionView) == collectionView
+            UICollectionView) == collectionView
         if isSelf {
             return session.canLoadObjects(ofClass: UIImage.self)
         } else {
             return session.canLoadObjects(ofClass: NSURL.self) &&
-                   session.canLoadObjects(ofClass: UIImage.self)
+                session.canLoadObjects(ofClass: UIImage.self)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-            dropSessionDidUpdate session: UIDropSession,
-            withDestinationIndexPath destinationIndexPath: IndexPath?
-        ) -> UICollectionViewDropProposal {
-        let isSelf = (session.localDragSession?.localContext as?
-                                              UICollectionView) == collectionView
-        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy,
-                                            intent: .insertAtDestinationIndexPath)
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
     
-    var imageFetcher: ImageFetcher!
-    
+
     func collectionView(_ collectionView: UICollectionView,
-             performDropWith coordinator: UICollectionViewDropCoordinator) {
+                        performDropWith coordinator: UICollectionViewDropCoordinator) {
         let destinationIndexPath = coordinator.destinationIndexPath ??
-                                               IndexPath(item: 0, section: 0)
+            IndexPath(item: 0, section: 0)
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-                if  let imageInfo = item.dragItem.localObject as? ImageModel {
-                    collectionView.performBatchUpdates({
-                      imageGallery.images.remove(at: sourceIndexPath.item)
-                      imageGallery.images.insert(imageInfo,
-                                            at: destinationIndexPath.item)
-                        
-                      collectionView.deleteItems(at: [sourceIndexPath])
-                      collectionView.insertItems(at: [destinationIndexPath])
-                    })
-                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                    documentChanged()
-                }
+                let imageInfo = imageGallery.images[sourceIndexPath.item]
+                collectionView.performBatchUpdates({
+                    imageGallery.images.remove(at: sourceIndexPath.item)
+                    imageGallery.images.insert(imageInfo,
+                                               at: destinationIndexPath.item)
+                    
+                    collectionView.deleteItems(at: [sourceIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                })
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                documentChanged()
             } else {  // Drag from other app
-                let placeholderContext = coordinator.drop(
-                    item.dragItem,
-                    to: UICollectionViewDropPlaceholder(
-                                insertionIndexPath: destinationIndexPath,
-                                reuseIdentifier: "DropPlaceholderCell"
-                        )
-                )
-           
-                imageFetcher = ImageFetcher() { (url, image) in
+                let placeholderContext = coordinator.drop(item.dragItem,to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier:"DropPlaceholderCell"))
+                
+                var imageURL: URL?
+                var aspectRatio: Double?
+                
+                // Load URL
+                item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
                     DispatchQueue.main.async {
-                        let url = url.imageURL
-                        let aspectRatio = Double(image.size.width) /
-                            Double(image.size.height)
-                        placeholderContext.commitInsertion(dataSourceUpdates:{
-                            insertionIndexPath in
-                                self.imageGallery.images.insert(
-                                  ImageModel (url: url,aspectRatio: aspectRatio),
-                                  at: insertionIndexPath.item)
-                        })
-                        self.documentChanged()
+                        if let url = provider as? URL {
+                            imageURL = url.imageURL
+                        }
                     }
                 }
                 
                 // Load UIImage
                 item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) {
                     (provider, error) in
-                    if let image = provider as? UIImage {
-                        self.imageFetcher.backup = image
-                    }  else {
-                        placeholderContext.deletePlaceholder()
-                    }
-                }
-                // Load URL
-                item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) {
-                    (provider, error) in
-                        if let url = provider as? URL {
-                          self.imageFetcher.fetch(url)
-                        } else {
-                            placeholderContext.deletePlaceholder()
+                    DispatchQueue.main.async {
+                        if let image = provider as? UIImage {
+                            aspectRatio = Double(image.size.width / image.size.height)
+                            
+                            if imageURL != nil, aspectRatio != nil {
+                                image.check(imageURL!){ url in
+                                    if let urlChecked = url {
+                                    imageURL = urlChecked
+                                        //-------
+                                        if  placeholderContext.commitInsertion(dataSourceUpdates:
+                                            {  insertionIndexPath in
+                                                self.imageGallery.images.insert(
+                                                    ImageModel(url: imageURL!,aspectRatio: aspectRatio!),
+                                                    at: insertionIndexPath.item)
+                                        }) {
+                                            self.documentChanged()
+                                            print ("well")
+                                        } else {
+                                            print ("bad")
+                                            placeholderContext.deletePlaceholder()
+                                        }//
+                                        //--------
+                                    } else {
+                                        print ("bad bad")
+                                        placeholderContext.deletePlaceholder()
+                                    }
+                                }
+                            } else {
+                                placeholderContext.deletePlaceholder()
+                            }
+                        }
                     }
                 }
             }
+        }
+    }
+    
+    }
+
+extension Array {
+    mutating func mutateEach( _ body: (inout Element)->() ){
+        for index in self.indices {
+            body( &self[index] )
         }
     }
 }

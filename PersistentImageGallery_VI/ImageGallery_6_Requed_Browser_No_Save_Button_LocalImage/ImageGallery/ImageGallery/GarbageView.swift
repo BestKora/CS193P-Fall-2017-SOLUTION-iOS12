@@ -56,8 +56,7 @@ class GarbageView: UIView, UIDropInteractionDelegate {
         return UIDropProposal(operation: .copy)
     }
     
-    func dropInteraction(
-        _ interaction: UIDropInteraction,
+    func dropInteraction(_ interaction: UIDropInteraction,
         previewForDropping item: UIDragItem,
         withDefault defaultPreview: UITargetedDragPreview
         ) -> UITargetedDragPreview? {
@@ -73,20 +72,30 @@ class GarbageView: UIView, UIDropInteractionDelegate {
     func dropInteraction(_ interaction: UIDropInteraction,
                          performDrop session: UIDropSession) {
         session.loadObjects(ofClass: UIImage.self) { providers in
-            if let collection = (session.localDragSession?.localContext as? UICollectionView),
+            if let collection = (session.localDragSession?.localContext as?
+                                                            UICollectionView),
                 let images = (collection.dataSource as? ImageGalleryCollectionViewController)?.imageGallery.images,
                 let items = session.localDragSession?.items {
+                
+                var indexPaths = [IndexPath] ()
+                var indexes = [Int]()
+              
                 for item in items {
-                    if let object = item.localObject as? ImageModel,
-                        let index = images.index(of: object) {
+                  if let index = item.localObject as? Int {
                         let indexPath = IndexPath(item: index, section: 0)
-                        collection.performBatchUpdates({
-                            (collection.dataSource as? ImageGalleryCollectionViewController)?.imageGallery.images.remove(at: index)
-                            collection.deleteItems(at: [indexPath])
-                        })
-                        self.garbageViewDidChanged?()
+                        indexes += [index]
+                        indexPaths += [indexPath]
                     }
                 }
+                collection.performBatchUpdates({
+                    collection.deleteItems(at: indexPaths)
+                    (collection.dataSource as? ImageGalleryCollectionViewController)?.imageGallery.images
+                               = images
+                                .enumerated()
+                                .filter { !indexes.contains($0.offset) }
+                                .map { $0.element }
+                    })
+                        self.garbageViewDidChanged?()
             }
         }
     }

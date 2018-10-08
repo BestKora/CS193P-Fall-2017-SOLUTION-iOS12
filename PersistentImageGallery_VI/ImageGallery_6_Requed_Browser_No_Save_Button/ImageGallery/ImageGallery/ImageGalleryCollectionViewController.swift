@@ -8,14 +8,10 @@
 
 import UIKit
 
-class ImageGalleryCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UICollectionViewDropDelegate, UICollectionViewDragDelegate,  GarbageViewDelegate {
+class ImageGalleryCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UICollectionViewDropDelegate, UICollectionViewDragDelegate {
     
      // MARK: - Public API, Model
-    var imageGallery = ImageGallery (){
-        didSet {
-                collectionView?.reloadData()
-        }
-    }
+    var imageGallery = ImageGallery ()
     
     var document: ImageGalleryDocument?
     
@@ -36,7 +32,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     @IBAction func close(_ sender: UIBarButtonItem? = nil) {
   //      save()
         if document?.imageGallery != nil {
-            if let firstImage = firstImage?.snapshot {
+            if let firstImage = (self.collectionView!.cellForItem(at:
+                IndexPath(item: 0, section: 0))
+                as? ImageCollectionViewCell)?.imageGallery.snapshot {
                 document?.thumbnail = firstImage
             }
         }
@@ -46,10 +44,12 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         document?.open { success in
             if success {
                 self.title = self.document?.localizedName
                 self.imageGallery = self.document?.imageGallery ?? ImageGallery ()
+                self.collectionView?.reloadData()
             }
         }
     }
@@ -68,12 +68,14 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         )
     }
     
-    var garbageView =  GarbageView()
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        let garbageView =  GarbageView()
         if let trashBounds = navigationController?.navigationBar.bounds {
-            garbageView.delegate = self
+            
+            garbageView.garbageViewDidChanged = { [weak self] in
+                self?.documentChanged()
+            }
             garbageView.frame = CGRect(x: trashBounds.size.width*0.6,
                                        y: 0.0, width: trashBounds.size.width*0.4,
                                        height: trashBounds.size.height)
@@ -82,16 +84,9 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
      
         }
     }
-    
-    //  MARK: - GarbageViewDelegate
-    
-    func garbageViewDidChange(_ sender: GarbageView) {
-        // just let our document know that the document has changed
-        // that way it can autosave it at an opportune time
-        documentChanged()
-    }
   
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         flowLayout?.invalidateLayout()
     }
     
@@ -105,10 +100,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         return imageGallery.images.count
     }
     
-    override func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-        ) -> UICollectionViewCell {
+    override func collectionView(_ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "Image Cell",
             for: indexPath)
@@ -207,7 +200,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                                                     as? ImageCollectionViewCell,
             let image = itemCell.imageGallery.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = imageGallery.images[indexPath.item]
+            dragItem.localObject = indexPath.item //imageGallery.images[indexPath.item]
             return [dragItem]
         } else {
             return []
@@ -217,25 +210,20 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     // MARK: UICollectionViewDropDelegate
     
     func collectionView(_ collectionView: UICollectionView,
-                       canHandle session: UIDropSession) -> Bool {
+                        canHandle session: UIDropSession) -> Bool {
         let isSelf = (session.localDragSession?.localContext as?
-                                     UICollectionView) == collectionView
+            UICollectionView) == collectionView
         if isSelf {
             return session.canLoadObjects(ofClass: UIImage.self)
         } else {
             return session.canLoadObjects(ofClass: NSURL.self) &&
-                   session.canLoadObjects(ofClass: UIImage.self)
+                session.canLoadObjects(ofClass: UIImage.self)
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-            dropSessionDidUpdate session: UIDropSession,
-            withDestinationIndexPath destinationIndexPath: IndexPath?
-        ) -> UICollectionViewDropProposal {
-        let isSelf = (session.localDragSession?.localContext as?
-                                              UICollectionView) == collectionView
-        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy,
-                                            intent: .insertAtDestinationIndexPath)
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        return UICollectionViewDropProposal(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -245,7 +233,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-                if  let imageInfo = item.dragItem.localObject as? ImageModel {
+                    let imageInfo = imageGallery.images[sourceIndexPath.item]
                     collectionView.performBatchUpdates({
                       imageGallery.images.remove(at: sourceIndexPath.item)
                       imageGallery.images.insert(imageInfo,
@@ -256,46 +244,35 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                     })
                     coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                     documentChanged()
-                }
             } else {  // Drag from other app
-                let placeholderContext = coordinator.drop(
-                    item.dragItem,
-                    to: UICollectionViewDropPlaceholder(
-                                insertionIndexPath: destinationIndexPath,
-                                reuseIdentifier: "DropPlaceholderCell"
-                        )
-                )
+                let placeholderContext = coordinator.drop(item.dragItem,to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier:"DropPlaceholderCell"))
            
-                var imageURLLocal: URL?
-                var aspectRatioLocal: Double?
+                var imageURL: URL?
+                var aspectRatio: Double?
                 
-                // Load UIImage
-                item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) {
-                    (provider, error) in
+                // Load URL
+                item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
                     DispatchQueue.main.async {
-                        if let image = provider as? UIImage {
-                            aspectRatioLocal = Double(image.size.width) /
-                                Double(image.size.height)
+                        if let url = provider as? URL {
+                            imageURL = url.imageURL
                         }
                     }
                 }
-                // Load URL
-                item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) {
-                    (provider, error) in
+                
+                // Load UIImage
+                item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
                     DispatchQueue.main.async {
-                        if let url = provider as? URL {
-                            imageURLLocal = url.imageURL
-                        }
-                        if imageURLLocal != nil, aspectRatioLocal != nil {
-                            placeholderContext.commitInsertion(dataSourceUpdates:
-                                {  insertionIndexPath in
-                              self.imageGallery.images.insert(ImageModel(url: imageURLLocal!,
-                                                               aspectRatio: aspectRatioLocal!),
-                                                              at: insertionIndexPath.item)
-                            })
-                            self.documentChanged()
-                        } else {
-                            placeholderContext.deletePlaceholder()
+                        if let image = provider as? UIImage {
+                            aspectRatio = Double(image.size.width / image.size.height)
+                            if imageURL != nil, aspectRatio != nil {
+                                placeholderContext.commitInsertion(dataSourceUpdates:
+                                    {  insertionIndexPath in
+                                        self.imageGallery.images.insert(ImageModel(url: imageURL!,aspectRatio: aspectRatio!),at: insertionIndexPath.item)
+                                })
+                                self.documentChanged()
+                            } else {
+                                placeholderContext.deletePlaceholder()
+                            }
                         }
                     }
                 }
@@ -303,4 +280,3 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         }
     }
 }
-

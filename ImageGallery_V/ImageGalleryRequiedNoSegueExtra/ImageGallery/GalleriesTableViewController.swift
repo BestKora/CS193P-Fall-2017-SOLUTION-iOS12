@@ -29,10 +29,12 @@ class GalleriesTableViewController: UITableViewController {
     let defaults = UserDefaults.standard
     var imageGalleriesJSON : [[ImageGallery]]? {
         get {
-            if let savedGalleries = defaults.object(forKey: "SavedGalleries") as? Data {
+            if let savedGalleries =
+                 defaults.object(forKey: "SavedGalleries") as? Data {
                 let decoder = JSONDecoder()
-                if let loadedGalleries = try? decoder.decode([[ImageGallery]].self,
-                                                             from: savedGalleries) {
+                if let loadedGalleries =
+                    try? decoder.decode([[ImageGallery]].self,
+                                              from: savedGalleries) {
                     return loadedGalleries
                 }
             }
@@ -68,6 +70,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillLayoutSubviews()
         super.viewDidDisappear(animated)
         imageGalleriesJSON = imageGalleries
     }
@@ -77,6 +80,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         if splitViewController?.preferredDisplayMode != .primaryOverlay {
             splitViewController?.preferredDisplayMode = .primaryOverlay
         }

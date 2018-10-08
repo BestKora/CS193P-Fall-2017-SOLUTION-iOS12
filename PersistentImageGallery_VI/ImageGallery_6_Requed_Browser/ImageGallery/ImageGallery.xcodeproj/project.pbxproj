@@ -13,12 +13,12 @@
 		E469F89C2156846800D47FDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E469F89A2156846800D47FDC /* Main.storyboard */; };
 		E469F89E2156846A00D47FDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E469F89D2156846A00D47FDC /* Assets.xcassets */; };
 		E469F8A12156846A00D47FDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E469F89F2156846A00D47FDC /* LaunchScreen.storyboard */; };
-		E469F8AF2157832600D47FDC /* GarbageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8A92157832500D47FDC /* GarbageView.swift */; };
 		E469F8B02157832600D47FDC /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8AA2157832500D47FDC /* ImageViewController.swift */; };
 		E469F8B12157832600D47FDC /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8AB2157832500D47FDC /* Utilities.swift */; };
 		E469F8B22157832600D47FDC /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8AC2157832600D47FDC /* ImageCollectionViewCell.swift */; };
 		E469F8B32157832600D47FDC /* ImageGalleryCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8AD2157832600D47FDC /* ImageGalleryCollectionViewController.swift */; };
 		E469F8B42157832600D47FDC /* ImageGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469F8AE2157832600D47FDC /* ImageGallery.swift */; };
+		E4A9662F216B3005004092AB /* GarbageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A9662E216B3005004092AB /* GarbageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,12 +30,12 @@
 		E469F89D2156846A00D47FDC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E469F8A02156846A00D47FDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E469F8A22156846A00D47FDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E469F8A92157832500D47FDC /* GarbageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarbageView.swift; sourceTree = "<group>"; };
 		E469F8AA2157832500D47FDC /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		E469F8AB2157832500D47FDC /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		E469F8AC2157832600D47FDC /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E469F8AD2157832600D47FDC /* ImageGalleryCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGalleryCollectionViewController.swift; sourceTree = "<group>"; };
 		E469F8AE2157832600D47FDC /* ImageGallery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageGallery.swift; sourceTree = "<group>"; };
+		E4A9662E216B3005004092AB /* GarbageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GarbageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +75,7 @@
 				E469F8AD2157832600D47FDC /* ImageGalleryCollectionViewController.swift */,
 				E469F8AC2157832600D47FDC /* ImageCollectionViewCell.swift */,
 				E469F8AA2157832500D47FDC /* ImageViewController.swift */,
-				E469F8A92157832500D47FDC /* GarbageView.swift */,
+				E4A9662E216B3005004092AB /* GarbageView.swift */,
 				E469F8AB2157832500D47FDC /* Utilities.swift */,
 				E469F8A22156846A00D47FDC /* Info.plist */,
 				E469F8A821568E2200D47FDC /* Supporting Files */,
@@ -167,10 +167,10 @@
 			files = (
 				E469F8B42157832600D47FDC /* ImageGallery.swift in Sources */,
 				E469F8B12157832600D47FDC /* Utilities.swift in Sources */,
-				E469F8AF2157832600D47FDC /* GarbageView.swift in Sources */,
 				E469F8992156846800D47FDC /* ImageGalleryDocument.swift in Sources */,
 				E469F8B32157832600D47FDC /* ImageGalleryCollectionViewController.swift in Sources */,
 				E469F8B22157832600D47FDC /* ImageCollectionViewCell.swift in Sources */,
+				E4A9662F216B3005004092AB /* GarbageView.swift in Sources */,
 				E469F8B02157832600D47FDC /* ImageViewController.swift in Sources */,
 				E469F8952156846800D47FDC /* DocumentBrowserViewController.swift in Sources */,
 				E469F8932156846700D47FDC /* AppDelegate.swift in Sources */,

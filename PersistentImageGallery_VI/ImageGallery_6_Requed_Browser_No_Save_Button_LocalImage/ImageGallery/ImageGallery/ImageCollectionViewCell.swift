@@ -37,12 +37,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
                let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                 //    self.imageGallery?.image =  image
+                    print ("кэш")
                     self.imageGallery?.transition(toImage: image)
                     self.spinner?.stopAnimating()
                 }
             } else {
                 URLSession.shared.dataTask(with: request, completionHandler:
                     { (data, response, error) in
+                           print ("сеть")
                     if let data = data,
                         let response = response,
                         ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300
@@ -114,20 +116,3 @@ extension UIImageView {
     }
 }
 
-// self.imageGallery?.transition(toImage: image)
-
-/*          DispatchQueue.global(qos: .userInitiated).async {
- let urlContents = try? Data(contentsOf: url)
- 
- DispatchQueue.main.async {
- if let imageData = urlContents, url == self.imageURL,
- let image = UIImage(data: imageData) {
- self.imageGallery?.image =  image
- } else {
- self.imageGallery?.image =
- "Error 😡".emojiToImage()?.applyBlurEffect()
- self.changeAspectRatio?()
- }
- self.spinner?.stopAnimating()
- }
- } */
