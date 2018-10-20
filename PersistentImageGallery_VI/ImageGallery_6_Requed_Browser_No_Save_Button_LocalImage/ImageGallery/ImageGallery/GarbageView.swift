@@ -31,8 +31,9 @@ class GarbageView: UIView, UIDropInteractionDelegate {
         addInteraction(dropInteraction)
         
         backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        
         let trashImage = UIImage.imageFromSystemBarButton(.trash)
-        myButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        let myButton = UIButton()
         myButton.setImage(trashImage, for: .normal)
         self.addSubview(myButton)
     }
@@ -40,7 +41,10 @@ class GarbageView: UIView, UIDropInteractionDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         if self.subviews.count > 0 {
-            self.subviews[0].frame = CGRect(x: bounds.width - bounds.height, y: 0, width:  myButton.bounds.width, height: myButton.bounds.height)
+            self.subviews[0].frame = CGRect(x: bounds.width - bounds.height,
+                                            y: 0,
+                                            width:  bounds.height,
+                                            height: bounds.height)
         }
     }
     
@@ -81,8 +85,8 @@ class GarbageView: UIView, UIDropInteractionDelegate {
                 var indexes = [Int]()
               
                 for item in items {
-                  if let index = item.localObject as? Int {
-                        let indexPath = IndexPath(item: index, section: 0)
+                    if let indexPath = item.localObject as? IndexPath {
+                        let index = indexPath.item
                         indexes += [index]
                         indexPaths += [indexPath]
                     }

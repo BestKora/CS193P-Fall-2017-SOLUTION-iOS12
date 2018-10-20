@@ -80,19 +80,21 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         )
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let garbageView =  GarbageView()
-        if let trashBounds = navigationController?.navigationBar.bounds {
+    var garbageView =  GarbageView()
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let navBounds = navigationController?.navigationBar.bounds {
+            garbageView.frame =  CGRect(
+                x: navBounds.width*0.6,
+                y: 0.0,
+                width:  navBounds.width*0.4,
+                height: navBounds.height)
             garbageView.garbageViewDidChanged = { [weak self] in
-                 self?.documentChanged()
+                self?.documentChanged()
             }
-            garbageView.frame = CGRect(x: trashBounds.size.width*0.6,
-                                       y: 0.0, width: trashBounds.size.width*0.4,
-                                       height: trashBounds.size.height)
             let barButton = UIBarButtonItem(customView: garbageView)
             navigationItem.rightBarButtonItem = barButton
-     
         }
     }
   
@@ -213,7 +215,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                                                     as? ImageCollectionViewCell,
             let image = itemCell.imageGallery.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = indexPath.item
+            dragItem.localObject = indexPath //imageGallery.images[indexPath.item]
             return [dragItem]
         } else {
             return []

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ImageModel: Codable,Equatable {
+struct ImageModel: Codable {
     var url: URL
     var aspectRatio: Double
 }
