@@ -21,8 +21,4 @@ struct ImageModel {
     init(name: String) {
         self.name = name
     }
-    
-    func addImage(image: ImageModel) {
-        images.append(image)
-    }
 }

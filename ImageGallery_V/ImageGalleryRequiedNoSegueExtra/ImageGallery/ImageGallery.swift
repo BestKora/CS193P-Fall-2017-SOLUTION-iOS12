@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ImageModel: Codable,Equatable {
+struct ImageModel: Codable {
     var url: URL
     var aspectRatio: Double
 }
@@ -20,9 +20,5 @@ class ImageGallery: Codable {
 
     init(name: String) {
         self.name = name
-    }
-    
-    func addImage(image: ImageModel) {
-        images.append(image)
     }
 }

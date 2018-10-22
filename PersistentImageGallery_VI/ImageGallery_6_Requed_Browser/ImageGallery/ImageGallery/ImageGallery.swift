@@ -8,17 +8,13 @@
 
 import Foundation
 
-struct ImageModel: Codable,Equatable {
+struct ImageModel: Codable {
     var url: URL
     var aspectRatio: Double
 }
 
 struct ImageGallery: Codable {
     var images = [ImageModel]()
-
-    mutating func addImage(image: ImageModel) {
-        images.append(image)
-    }
     
     var json: Data? {
         return try? JSONEncoder().encode(self)

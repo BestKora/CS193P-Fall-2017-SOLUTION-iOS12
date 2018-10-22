@@ -15,10 +15,6 @@ struct ImageModel: Codable,Equatable {
 
 struct ImageGallery: Codable {
     var images = [ImageModel]()
-
-    mutating func addImage(image: ImageModel) {
-        images.append(image)
-    }
     
     var json: Data? {
         return try? JSONEncoder().encode(self)

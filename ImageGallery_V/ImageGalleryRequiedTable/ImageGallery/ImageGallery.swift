@@ -20,8 +20,4 @@ struct ImageGallery {
     init(name: String) {
         self.name = name
     }
-    
-    mutating func addImage(image: ImageModel) {
-        images.append(image)
-    }
 }
