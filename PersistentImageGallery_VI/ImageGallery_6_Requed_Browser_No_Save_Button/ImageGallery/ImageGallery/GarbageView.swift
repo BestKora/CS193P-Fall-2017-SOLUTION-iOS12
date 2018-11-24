@@ -55,13 +55,18 @@ class GarbageView: UIView, UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction,
               sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        return UIDropProposal(operation: .copy)
+        if session.localDragSession != nil {
+            return UIDropProposal(operation: .copy)
+        } else {
+            return UIDropProposal(operation: .forbidden)
+        }
     }
     
     func dropInteraction(_ interaction: UIDropInteraction,
         previewForDropping item: UIDragItem,
         withDefault defaultPreview: UITargetedDragPreview
         ) -> UITargetedDragPreview? {
+        
         let target = UIDragPreviewTarget(
             container: self,
             center: CGPoint(x: bounds.width - bounds.size.height * 1 / 2,
@@ -105,9 +110,11 @@ class GarbageView: UIView, UIDropInteractionDelegate {
 
 extension UIImage{
     
-    class func imageFromSystemBarButton(_ systemItem: UIBarButtonItem.SystemItem, renderingMode:UIImage.RenderingMode = .automatic)-> UIImage {
+    class func imageFromSystemBarButton(_ systemItem: UIBarButtonItem.SystemItem,
+                renderingMode:UIImage.RenderingMode = .automatic)-> UIImage {
         
-        let tempItem = UIBarButtonItem(barButtonSystemItem: systemItem, target: nil, action: nil)
+        let tempItem = UIBarButtonItem(barButtonSystemItem: systemItem,
+                                                    target: nil, action: nil)
         
         // add to toolbar and render it
         let bar = UIToolbar()

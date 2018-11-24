@@ -23,7 +23,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         didSet { updateUI()}
     }
     
-    
     var changeAspectRatio : (() -> Void)?
     
     private func updateUI() {

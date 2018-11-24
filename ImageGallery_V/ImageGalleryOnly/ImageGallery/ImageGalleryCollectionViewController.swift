@@ -181,16 +181,15 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-              let imageInfo = imageCollection[sourceIndexPath.item]
-                    collectionView.performBatchUpdates({
-                        imageCollection.remove(at: sourceIndexPath.item)
-                        imageCollection.insert(imageInfo, at: destinationIndexPath.item)
-                        
-                        collectionView.deleteItems(at: [sourceIndexPath])
-                        collectionView.insertItems(at: [destinationIndexPath])
-                    })
-                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
                 
+                collectionView.performBatchUpdates({
+                    let imageInfo = imageCollection.remove(at: sourceIndexPath.item)
+                    imageCollection.insert(imageInfo, at: destinationIndexPath.item)
+                    
+                    collectionView.deleteItems(at: [sourceIndexPath])
+                    collectionView.insertItems(at: [destinationIndexPath])
+                })
+                coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
             } else {  // Drag from other app
                 let placeholderContext = coordinator.drop(
                     item.dragItem,

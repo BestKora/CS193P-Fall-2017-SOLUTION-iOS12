@@ -71,7 +71,17 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
          autoZoomed = true
         if let url = imageURL {
             spinner.startAnimating()
+            let request = URLRequest(url: url)
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+                if let data = cache.cachedResponse(for: request)?.data,
+                    let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        //    self.imageGallery?.image =  image
+                        self?.image = image
+                        print ("кэш")
+                        self?.spinner?.stopAnimating()
+                    }
+                } else {
                 let urlContents = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
                     if let imageData = urlContents, url == self?.imageURL {
@@ -80,6 +90,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate
                 }
             }
         }
+    }
     }
     
     // Рассчитывает zoom масштаб для "подгонки" изображения к размеру экрана,

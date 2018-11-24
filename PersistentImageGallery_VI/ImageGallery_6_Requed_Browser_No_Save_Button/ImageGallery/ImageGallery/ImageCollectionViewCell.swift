@@ -15,7 +15,8 @@ let cache = URLCache(
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageGallery: UIImageView!
+    
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     // MARK: - Public API
@@ -28,7 +29,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private func updateUI() {
         guard let url = imageURL else {return}
-        imageGallery.image = nil
+        imageView.image = nil
         let request = URLRequest(url: url)
         self.spinner?.startAnimating()
         
@@ -37,7 +38,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
                let image = UIImage(data: data) {
                 DispatchQueue.main.async {
                 //    self.imageGallery?.image =  image
-                    self.imageGallery?.transition(toImage: image)
+                    self.imageView?.transition(toImage: image)
                     print ("кэш")
                     self.spinner?.stopAnimating()
                 }
@@ -52,14 +53,14 @@ class ImageCollectionViewCell: UICollectionViewCell {
                         let cachedData = CachedURLResponse(response: response, data: data)
                         cache.storeCachedResponse(cachedData, for: request)
                         DispatchQueue.main.async {
-                            self.imageGallery?.image =  image
+                            self.imageView?.image =  image
                             print ("сеть")
                             self.spinner?.stopAnimating()
                         }
                     } else {
                         DispatchQueue.main.async {
                             self.spinner?.stopAnimating()
-                            self.imageGallery?.image =
+                            self.imageView?.image =
                                 "Error 😡".emojiToImage()?.applyBlurEffect()
                             self.changeAspectRatio?()
                             

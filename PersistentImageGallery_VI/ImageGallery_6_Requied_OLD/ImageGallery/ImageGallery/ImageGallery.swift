@@ -15,17 +15,13 @@ struct ImageModel: Codable {
 
 struct ImageGallery: Codable {
     var images = [ImageModel]()
-
-    mutating func addImage(image: ImageModel) {
-        images.append(image)
-    }
-    
     var json: Data? {
         return try? JSONEncoder().encode(self)
     }
     
     init?(json: Data) {
-        if let newValue = try? JSONDecoder().decode(ImageGallery.self, from: json) {
+        if let newValue =
+            try? JSONDecoder().decode(ImageGallery.self, from: json) {
             self = newValue
         } else {
             return nil

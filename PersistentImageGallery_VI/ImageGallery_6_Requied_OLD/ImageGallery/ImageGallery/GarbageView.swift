@@ -54,7 +54,11 @@ class GarbageView: UIView, UIDropInteractionDelegate {
     
     func dropInteraction(_ interaction: UIDropInteraction,
               sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        return UIDropProposal(operation: .copy)
+        if session.localDragSession != nil {
+            return UIDropProposal(operation: .copy)
+        } else {
+            return UIDropProposal(operation: .forbidden)
+        }
     }
     
     func dropInteraction(_ interaction: UIDropInteraction,

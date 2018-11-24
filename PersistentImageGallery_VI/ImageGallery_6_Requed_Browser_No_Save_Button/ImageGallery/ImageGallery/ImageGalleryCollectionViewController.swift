@@ -18,7 +18,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     var firstImage: UIImageView? {
         return (self.collectionView!.cellForItem(at:
                                   IndexPath(item: 0, section: 0))
-            as? ImageCollectionViewCell)?.imageGallery
+            as? ImageCollectionViewCell)?.imageView
     }
     
  //   @IBAction func save(_ sender: UIBarButtonItem? = nil) {
@@ -34,7 +34,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         if document?.imageGallery != nil {
             if let firstImage = (self.collectionView!.cellForItem(at:
                 IndexPath(item: 0, section: 0))
-                as? ImageCollectionViewCell)?.imageGallery.snapshot {
+                as? ImageCollectionViewCell)?.imageView.snapshot {
                 document?.thumbnail = firstImage
             }
         }
@@ -199,7 +199,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if let itemCell = collectionView?.cellForItem(at: indexPath)
                                                     as? ImageCollectionViewCell,
-            let image = itemCell.imageGallery.image {
+            let image = itemCell.imageView.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
             dragItem.localObject = indexPath //imageGallery.images[indexPath.item]
             return [dragItem]
@@ -223,7 +223,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+        let isSelf = (session.localDragSession?.localContext as?
+            UICollectionView) == collectionView
         return UICollectionViewDropProposal(operation: isSelf ? .move : .copy, intent: .insertAtDestinationIndexPath)
     }
     
@@ -243,8 +244,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                       collectionView.deleteItems(at: [sourceIndexPath])
                       collectionView.insertItems(at: [destinationIndexPath])
                     })
-                    coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                    documentChanged()
+                        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+                        documentChanged()
             } else {  // Drag from other app
                 let placeholderContext = coordinator.drop(item.dragItem,to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier:"DropPlaceholderCell"))
            

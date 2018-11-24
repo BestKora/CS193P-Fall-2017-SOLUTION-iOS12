@@ -163,7 +163,7 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
     private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
         if let itemCell = collectionView?.cellForItem(at: indexPath)
                                                     as? ImageCollectionViewCell,
-            let image = itemCell.imageGallery.image {
+            let image = itemCell.imageView.image {
             let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
             dragItem.localObject = indexPath //imageGallery.images[indexPath.item]
             return [dragItem]
@@ -203,9 +203,8 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         
         for item in coordinator.items {
             if let sourceIndexPath = item.sourceIndexPath { // Drag locally
-                let imageInfo = imageGallery.images[sourceIndexPath.item]
                     collectionView.performBatchUpdates({
-                      imageGallery.images.remove(at: sourceIndexPath.item)
+                       let imageInfo = imageGallery.images.remove(at: sourceIndexPath.item)
                       imageGallery.images.insert(imageInfo,
                                             at: destinationIndexPath.item)
                         
@@ -245,9 +244,10 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
                         if imageURLLocal != nil, aspectRatioLocal != nil {
                             placeholderContext.commitInsertion(dataSourceUpdates:
                                 {  insertionIndexPath in
-                              self.imageGallery.images.insert(ImageModel(url: imageURLLocal!,
-                                                               aspectRatio: aspectRatioLocal!),
-                                                              at: insertionIndexPath.item)
+                              self.imageGallery.images.insert(
+                                ImageModel(url: imageURLLocal!,
+                                aspectRatio: aspectRatioLocal!),
+                                         at: insertionIndexPath.item)
                             })
                         } else {
                             placeholderContext.deletePlaceholder()

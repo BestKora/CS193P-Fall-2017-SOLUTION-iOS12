@@ -10,7 +10,7 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var imageGallery: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     // MARK: - Public API
@@ -22,7 +22,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     private func updateUI() {
         if let url = imageURL{
-            imageGallery.image = nil
+            imageView.image = nil
             spinner?.startAnimating()
             
             DispatchQueue.global(qos: .userInitiated).async {
@@ -31,9 +31,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
                 DispatchQueue.main.async {
                     if let imageData = urlContents, url == self.imageURL,
                         let image = UIImage(data: imageData) {
-                        self.imageGallery?.image =  image
+                        self.imageView?.image =  image
                     }else {
-                        self.imageGallery?.image =
+                        self.imageView?.image =
                                  "Error 😡".emojiToImage()?.applyBlurEffect()
                         self.changeAspectRatio?()
                     }
