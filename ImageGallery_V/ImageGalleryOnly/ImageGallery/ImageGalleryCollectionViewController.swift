@@ -8,7 +8,10 @@
 
 import UIKit
 
-class ImageGalleryCollectionViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout, UICollectionViewDropDelegate, UICollectionViewDragDelegate {
+class ImageGalleryCollectionViewController: UICollectionViewController,
+            UICollectionViewDelegateFlowLayout,
+            UICollectionViewDropDelegate,
+            UICollectionViewDragDelegate {
     
      // MARK: - Public API, Model
     
@@ -20,6 +23,19 @@ class ImageGalleryCollectionViewController: UICollectionViewController,UICollect
         super.viewDidLoad()
         collectionView!.dropDelegate = self
         collectionView!.dragDelegate = self
+          let im1 = ImageModel(url: URL(string:
+         "http://www.planetware.com/photos-large/F/france-paris-eiffel-tower.jpg")!,
+         aspectRatio: 0.67)
+         imageCollection.append(im1)
+         let im2 = ImageModel(url: URL(string:
+         "https://adriatic-lines.com/wp-content/uploads/2015/04/canal-of-Venice.jpg")!,
+         aspectRatio: 1.5)
+         imageCollection.append(im2)
+         let im3 = ImageModel(url: URL(string:
+         "http://www.picture-newsletter.com/arctic/arctic-12.jpg")!,
+         aspectRatio: 0.8)
+         imageCollection.append(im3)
+        
         collectionView?.addGestureRecognizer(UIPinchGestureRecognizer(
             target: self,
             action: #selector(ImageGalleryCollectionViewController.zoom(_:)))

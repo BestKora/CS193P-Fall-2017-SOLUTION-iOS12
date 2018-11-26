@@ -70,8 +70,7 @@ class GalleriesTableViewController: UITableViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillLayoutSubviews()
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         imageGalleriesJSON = imageGalleries
     }
     
@@ -241,11 +240,11 @@ class GalleriesTableViewController: UITableViewController {
             Timer.scheduledTimer(
                 withTimeInterval: timeDelay,
                 repeats: false,
-                block: { (timer) in
-                        self.tableView.selectRow(at: indexPath,
+                block: {[weak self] (timer) in
+                        self?.tableView.selectRow(at: indexPath,
                                                  animated: false,
                                                  scrollPosition: .none)
-                        self.tableView(self.tableView, didSelectRowAt: indexPath)
+                         self?.showCollection(at: indexPath)
                 }
             )
         }
